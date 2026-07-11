@@ -1,0 +1,67 @@
+# L2: 全 PR に最低 1 本の検証を保証する軽量チェック(ubuntu のみ)。
+# YAML の構文と、ループ運用に必須のファイル構造を検証する。
+name: docs-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate YAML syntax
+        run: |
+          pip install --quiet pyyaml
+          python3 - <<'EOF'
+          import glob, sys, yaml
+          files = sorted(
+              glob.glob(".github/**/*.yml", recursive=True)
+              + glob.glob("loop/**/*.yaml", recursive=True)
+          )
+          failed = False
+          for path in files:
+              try:
+                  with open(path) as f:
+                      yaml.safe_load(f)
+                  print(f"OK  {path}")
+              except yaml.YAMLError as e:
+                  print(f"NG  {path}: {e}")
+                  failed = True
+          sys.exit(1 if failed else 0)
+          EOF
+      - name: Check required loop files exist
+        run: |
+          missing=0
+          for f in README.md CLAUDE.md \
+                   docs/loop-design.md docs/validation-plan.md docs/roles-and-gates.md docs/environments.md \
+                   loop/loop-spec.yaml loop/approval-policy.md \
+                   experiments/README.md metrics/README.md metrics/loop-log.csv \
+                   .github/PULL_REQUEST_TEMPLATE.md; do
+            if [ ! -f "$f" ]; then
+              echo "missing: $f"
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ] && echo "structure OK"
+          exit "$missing"
+      - name: Check loop-log.csv header
+        run: |
+          expected='date,ref,task,change_class,agent_env,ci_runs,ci_failures,human_touches,human_minutes,outcome,notes'
+          actual="$(head -n1 metrics/loop-log.csv)"
+          if [ "$actual" != "$expected" ]; then
+            echo "loop-log.csv header mismatch"
+            echo "expected: $expected"
+            echo "actual:   $actual"
+            exit 1
+          fi
+          echo "header OK"

@@ -1,0 +1,33 @@
+# L2: AppCore (SwiftPM) を Linux 上でビルド・テストする。
+# macOS ランナー不要 = 安い・速い。これが「コアの SwiftPM 分離」の配当。
+name: core-ci
+
+on:
+  pull_request:
+    paths:
+      - "packages/**"
+      - ".github/workflows/core-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packages/**"
+      - ".github/workflows/core-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift-test:
+    runs-on: ubuntu-latest
+    container: swift:6.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift build --package-path packages/AppCore
+      - name: Test
+        run: swift test --package-path packages/AppCore

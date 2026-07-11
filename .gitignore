@@ -1,0 +1,18 @@
+# Swift Package Manager
+# (Package.resolved はコミットする — CI 再現性のため)
+.build/
+.swiftpm/
+
+# Xcode
+*.xcodeproj/
+!project.yml
+xcuserdata/
+DerivedData/
+*.xcresult
+
+# macOS
+.DS_Store
+
+# fastlane (P2 以降)
+fastlane/report.xml
+fastlane/test_output

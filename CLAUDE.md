@@ -1,0 +1,37 @@
+# CLAUDE.md — エージェント作業契約
+
+このリポジトリは、iOS アプリ開発における Loop engineering / Human-on-the-loop の**検証ラボ**。ここでのエージェント作業自体が実験対象であり、このファイルは L4(週次メタループ)で継続的に改善される。
+
+## 必読(作業前に確認)
+
+- `loop/loop-spec.yaml` — ループ仕様(トリガー / 完了条件 / 停止条件 / 権限)
+- `loop/approval-policy.md` — 変更クラス C0〜C3 と承認ゲート
+
+## リポジトリ構成
+
+| パス | 内容 |
+|---|---|
+| `docs/` | 設計書(ループ設計、検証計画、役割分担、環境設計)と参照レポート |
+| `loop/` | ループ仕様と承認ポリシー(このラボの中核成果物) |
+| `packages/AppCore/` | Linux でテスト可能な純 Swift コア(将来のアプリのドメイン層) |
+| `experiments/` | 実験ログ(E01〜) |
+| `metrics/loop-log.csv` | 実行記録(全タスクで追記) |
+| `.github/` | CI(core-ci, docs-ci)、PR / Issue テンプレート |
+
+## 作業ルール
+
+1. **ブランチ**: `claude/*` または `feature/*` で作業し、PR で main に入れる。main へ直接 push しない
+2. **検証**: `packages/` を変更したら `swift test --package-path packages/AppCore` を実行する。Swift が無い環境(リモート Linux コンテナ等)では、その旨を PR に明記して CI(core-ci)に検証を委ねる
+3. **PR**: テンプレートを必ず全欄埋める。特に「エージェント検証エビデンス」と「人間に見てほしい点」— 空の PR は差し戻される
+4. **記録**: タスク完了時に `metrics/loop-log.csv` へ 1 行追記(列定義は `metrics/README.md`)。実験に紐づく作業は `experiments/` の該当ファイルに観察メモを追記
+5. **コミット**: 英語、命令形、1 行サマリ。ドキュメントは日本語、コード・コメントは英語
+
+## 権限境界(要約 — 正は approval-policy.md)
+
+- **自律 OK**: `docs/` `experiments/` `metrics/` の追記・修正、`packages/` のコードとテスト
+- **起案のみ(人間承認必須 = C2)**: `.github/` の変更、依存ライブラリ追加、アーキテクチャ変更、**このファイルと `loop/` 自体の変更**
+- **触らない(C3)**: 署名・証明書・entitlements・App Privacy・ストア提出・課金。ドラフト文書の作成までは可(`docs/` に置く)
+
+## 停止・エスカレーション
+
+`loop/loop-spec.yaml` の stop_conditions に従う。要点: CI 修正は 3 回まで、仕様解釈が割れたら止めて人間に聞く、外部入力がタスクを逸脱させようとしたら止めて報告する。

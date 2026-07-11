@@ -1,0 +1,2 @@
+date,ref,task,change_class,agent_env,ci_runs,ci_failures,human_touches,human_minutes,outcome,notes
+2026-07-11,PR#1,Initial lab setup (docs + loop spec + AppCore + CI),C2,remote-linux,,,3,,pending,"Swift unavailable in remote Linux container; AppCore verification delegated to core-ci. Human touches: empty-repo init + review + merge"
