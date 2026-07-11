@@ -1,2 +1,3 @@
 date,ref,task,change_class,agent_env,ci_runs,ci_failures,human_touches,human_minutes,outcome,notes
 2026-07-11,PR#1,Initial lab setup (docs + loop spec + AppCore + CI),C2,remote-linux,2,0,4,,merged,"Swift unavailable in remote Linux container; AppCore verified by core-ci (green first run). Human touches: empty-repo init, GitHub App permission grant, review, merge"
+2026-07-11,PR#4,Add SemVer prerelease identifiers to SemanticVersion (Issue#3),C1,remote-linux,2,0,0,,open,"First E01 task. Swift unavailable locally; algorithm pre-verified via Python port (70 checks) before delegating swift test to core-ci. Recorded at PR open; finalize human_touches/outcome at merge (PR#1 precedent)"
