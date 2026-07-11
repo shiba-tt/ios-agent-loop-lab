@@ -1,0 +1,40 @@
+name: Experiment
+description: ループ検証実験の起票(docs/validation-plan.md の実験を実施に移す)
+title: "[EXX] "
+labels: ["experiment"]
+body:
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: 仮説
+      description: 何が成り立つと考えているか(反証可能な形で)
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: 方法
+      description: 何をどの順でやるか。使う環境(remote-linux / remote-macos / local-mac)
+    validations:
+      required: true
+  - type: textarea
+    id: metrics
+    attributes:
+      label: 計測指標
+      description: loop-log.csv のどの列で測るか、追加で記録するもの
+    validations:
+      required: true
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: 成功基準
+      description: 数値で。失敗した場合の見立ても書いておくと L4 が楽になる
+    validations:
+      required: true
+  - type: input
+    id: reflect-to
+    attributes:
+      label: 学びの反映先
+      description: CLAUDE.md / loop/ / テンプレート / docs のどれを更新して実験完了とするか
+    validations:
+      required: true
