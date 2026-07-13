@@ -22,6 +22,6 @@
 ## チェックリスト
 
 - [ ] CI green
-- [ ] `metrics/loop-log.csv` に 1 行追記した(このリポジトリの運用タスクの場合)
+- [ ] `metrics/loop-log.csv` に 1 行追記した(`outcome=open` で。確定は次タスクか L4 — 二段階記録)
 - [ ] 変更クラスに応じたゲート(`loop/approval-policy.md`)を満たしている
 - [ ] 実験に紐づく作業の場合、`experiments/` の該当ファイルに観察メモを追記した

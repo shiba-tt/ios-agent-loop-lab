@@ -14,10 +14,11 @@ body:
     id: definition-of-done
     attributes:
       label: 完了条件(検証方法)
-      description: エージェントが自分で確認できる形で書く(テストケース、コマンド、期待される出力)。ここが曖昧だとループは回らない
+      description: エージェントが自分で確認できる形で書く(テストケース、コマンド、期待される出力)。境界条件は「含む/含まない」まで、長さ・個数は単位(書記素/スカラ等)まで明記 — 未指定の細部はエージェントが既定を選びレビューに委ねる運用(E01 で確立)。ここが曖昧だとループは回らない
       placeholder: |
         例:
         - SemanticVersion("1.2.3-beta.1") が parse でき、1.2.3-beta.1 < 1.2.3 になる
+        - 表示期間は両端を含む(from ちょうど・to ちょうども表示対象)
         - swift test --package-path packages/AppCore が green
     validations:
       required: true
