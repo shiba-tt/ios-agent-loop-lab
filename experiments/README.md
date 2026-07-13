@@ -13,9 +13,9 @@ Loop engineering / HOTL の検証実験の記録置き場。全体計画は [doc
 
 | ID | 名前 | 状態 | 学びの反映先 |
 |---|---|---|---|
-| [E01](E01-remote-core-loop.md) | リモートコアループ | **Ready**(この PR マージ後に開始可能) | CLAUDE.md, テンプレ構造 |
+| [E01](E01-remote-core-loop.md) | リモートコアループ | **完了(成功)** — 3/3 マージ、タッチ 2 回/PR、CI 初回 green 3/3 | 反映済み: CLAUDE.md、metrics/README、agent-task テンプレ |
 | E02 | アプリ殻とシミュレータ CI | 未着手(P1) | XcodeGen 設定, CI |
 | E03 | HOTL ゲート運用 | 未着手(P1、E01 と並行可) | approval-policy |
 | E04 | TestFlight パイプライン | 未着手(P2) | fastlane 設定, secrets 手順 |
-| E05 | 改善メタループ | 未着手(P3、E01 開始時点から計測は開始) | loop-spec, 週次レビュー手順 |
+| E05 | 改善メタループ | 計測中 — L4 1 周目を 2026-07-12 実施 | loop-spec, 週次レビュー手順 |
 | E06 | 2本目立ち上げ | 未着手(P3) | テンプレートリポジトリ |
